@@ -18,12 +18,16 @@ int main()
 	InitWindow(4 * screenConstant, 3 * screenConstant, "2D Plataformer");
 
 	Texture2D textureKnightIdle = LoadTexture("images/_idle.png");
+	Stopwatch animationIdleStopwatch = StopwatchCreate(0.05f);
 
-	Stopwatch animationStopwatch = StopwatchCreate(0.05f);
+	int frameIdle = 0;
+	int maxIdleFrames = 10;
 
-	int frame = 0;
-	float frameWidth = (float)(textureKnightIdle.width / 10);
-	int maxFrames = 10;
+	Texture2D textureKnightAttackNoMove = LoadTexture("images/_Attack2NoMovement.png");
+	Stopwatch animationAttackNoMoveStopwatch = StopwatchCreate(0.03f);
+
+	int frameAttackNoMove = 0;
+	int maxAttackNoMoveFrames = 6;
 
 	float x = 300, y = 300;
 
@@ -32,18 +36,26 @@ int main()
 	{
 		if (IsKeyDown(KEY_D))
 		{
-			x += 200.0f * GetFrameTime();
+			x += 300.0f * GetFrameTime();
 		}
 
 		if (IsKeyDown(KEY_A))
 		{
-			x -= 200.0f * GetFrameTime();
+			x -= 300.0f * GetFrameTime();
 		}
 
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 
-		AnimateTexture(textureKnightIdle, &animationStopwatch, maxFrames, &frame, x, y);
+		if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+		{
+			AnimateTexture(textureKnightAttackNoMove, &animationAttackNoMoveStopwatch, maxAttackNoMoveFrames,  &frameAttackNoMove, x, y);
+		}
+
+		else 
+		{
+			AnimateTexture(textureKnightIdle, &animationIdleStopwatch, maxIdleFrames, &frameIdle, x, y);
+		}
 
 		EndDrawing();
 	}
