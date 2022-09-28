@@ -29,6 +29,19 @@ int main()
 	int frameAttackNoMove = 0;
 	int maxAttackNoMoveFrames = 6;
 
+	Texture2D textureKnightRunRight = LoadTexture("images/_RunRight.png");
+	Stopwatch animationRunRightStopwatch = StopwatchCreate(0.05f);
+
+	int frameRunRight = 0;
+	int maxRunRightFrames = 10;
+
+	Texture2D textureKnightRunLeft = LoadTexture("images/_RunLeft.png");
+	Stopwatch animationRunLeftStopwatch = StopwatchCreate(0.05f);
+
+	int frameRunLeft = 0;
+	int maxRunLeftFrames = 10;
+
+
 	float x = 300, y = 300;
 
 	SetTargetFPS(144);
@@ -49,12 +62,22 @@ int main()
 
 		if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
 		{
-			AnimateTexture(textureKnightAttackNoMove, &animationAttackNoMoveStopwatch, maxAttackNoMoveFrames,  &frameAttackNoMove, x, y);
+			AnimateTexture(textureKnightAttackNoMove, &animationAttackNoMoveStopwatch, maxAttackNoMoveFrames,  &frameAttackNoMove, x, y, 5.0);
+		}
+
+		else if (IsKeyDown(KEY_A))
+		{
+			AnimateTexture(textureKnightRunLeft, &animationRunLeftStopwatch, maxRunLeftFrames,  &frameRunLeft, x, y, 5.0);
+		}
+
+		else if (IsKeyDown(KEY_D))
+		{
+			AnimateTexture(textureKnightRunRight, &animationRunRightStopwatch, maxRunRightFrames,  &frameRunRight, x, y, 5.0);
 		}
 
 		else 
 		{
-			AnimateTexture(textureKnightIdle, &animationIdleStopwatch, maxIdleFrames, &frameIdle, x, y);
+			AnimateTexture(textureKnightIdle, &animationIdleStopwatch, maxIdleFrames, &frameIdle, x, y, 5.0);
 		}
 
 		EndDrawing();
